@@ -1,0 +1,24 @@
+<!-- app/views/users/show.html.erb -->
+
+<div class="flex items-center justify-center h-screen">
+  <div class="w-full max-w-md">
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+      <div class="p-6">
+        <h1 class="text-2xl font-semibold text-gray-800 mb-2"><%= @user.username %></h1>
+        <p class="text-gray-600 mb-4">
+          <strong>Followers:</strong> <%= @followers_count %><br>
+          <strong>Following:</strong> <%= @following_count %>
+        </p>
+        <% unless current_user == @user %>
+          <div class="flex items-center">
+            <% if current_user.following?(@user) %>
+              <%= link_to "Unfollow", unfollow_user_path(@user), data: { turbo_method: :delete }, class: "inline-flex items-center px-4 py-2 bg-red-600 text-white font-semibold rounded-md hover:bg-red-700 focus:outline-none focus:bg-red-700" %>
+            <% else %>
+              <%= link_to "Follow", follow_user_path(@user), data: { turbo_method: :post }, class: "inline-flex items-center px-4 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-700" %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<div id="users-container" class="max-w-4xl mx-auto h-screen overflow-auto">
+  <div id="users" class="max-w-4xl mx-auto">
+    <% if @users.any? %>
+      <%= render @users %>
+    <% else %>
+      <p>No Users yet.</p>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="tweet mb-4" id="tweet_<%= tweet.id %>">
+  <div class="flex items-start gap-2.5">
+    <div class="flex flex-col w-full max-w-[800px] leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+      <div class="flex items-center space-x-2 rtl:space-x-reverse">
+        <span class="text-sm font-semibold text-gray-900 dark:text-white"><%= tweet.user.username %></span>
+        <span class="text-sm font-normal text-gray-500 dark:text-gray-400"><%= time_ago_in_words(tweet.created_at) %> ago</span>
+      </div>
+      <p class="tweet-content text-sm font-normal py-2.5 text-gray-900 dark:text-white overflow-hidden" style="max-height: 3.6em; /* (font-size + line-height) * lines */">
+        <%= tweet.content %>
+      </p>
+
+      <% if tweet.documents.attached? %>
+        <div class="mt-2">
+          <% tweet.documents.each do |doc| %>
+            <% if doc.content_type.start_with?('image/') %>
+              <%= image_tag doc, class: "rounded-lg max-h-40" %>
+            <% elsif doc.content_type.start_with?('video/') %>
+              <video controls class="rounded-lg max-h-40">
+                <source src="<%= url_for(doc) %>" type="<%= doc.content_type %>">
+                Your browser does not support the video tag.
+              </video>
+            <% else %>
+              <%= link_to doc.filename, url_for(doc), class: "text-blue-500 hover:underline" %>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <% if current_user == tweet.user %>
+      <%= link_to "Delete", tweet, remote: true, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "flex-shrink-0 self-end px-4 py-2 text-sm font-medium text-white bg-red-600 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" %>
+    <% end %>
+  </div>
+</div>

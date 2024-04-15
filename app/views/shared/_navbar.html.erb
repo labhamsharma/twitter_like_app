@@ -1,0 +1,20 @@
+<nav class="bg-gray-800 text-white py-4">
+  <div class="container mx-auto px-4">
+    <div class="flex justify-between items-center">
+      <a href="<%= root_path %>" class="font-bold text-xl">Twitter</a>
+      <% if user_signed_in? %>
+        <div>
+          <%= link_to "Edit Profile", edit_user_registration_path, class: "mr-4" %>
+          <%= link_to("Logout", destroy_user_session_path, class:'mr-4', data: { turbo_method: :delete }) %>
+          <%= link_to "Follow Users", users_path, class: "mr-4" %>
+        </div>
+      <% else %>
+        <div>
+          <%= link_to "Login", new_user_session_path, class: "mr-4" %>
+          <%= link_to "Sign Up", new_user_registration_path, class: "mr-4" %>
+          <%= link_to "Forgot your password?", new_password_path(resource_name) %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</nav>
